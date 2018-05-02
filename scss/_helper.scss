@@ -1,0 +1,4 @@
+@mixin posicion($i) {
+  position: absolute;
+  z-index: $i;
+}

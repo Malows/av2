@@ -1,3 +1,4 @@
+// import '../scss/style.scss'
 // Definiendo el div principal
 
 const divPrincipal = document.getElementById('principal')
@@ -40,7 +41,7 @@ function nivelNuevo (nombre, x, y, entrable) {
 
   const nuevoNivel = `
     <div class="nivel" id="nivel${nombre}" style="display: hidden">
-        <img src="interfaz/fondos/${nombre}.png" />
+        <img src="./img/fondos/${nombre}.png" />
     </div>`
 
   divPrincipal.insertAdjacentHTML('afterbegin', nuevoNivel)
@@ -98,9 +99,9 @@ function crearBotonNavegacion (orientacion, prendido) {
   const capi = orientacion[0].toUpperCase() + mini.substring(1)
   const estado = prendido ? 'p' : 'a'
   if (prendido) {
-    return `<input id="boton${capi}" type="image" onclick="cambiaNivel('${mini}')" src="interfaz/${mini}${estado}.png" class="${mini}"/>`
+    return `<input id="boton${capi}" type="image" onclick="cambiaNivel('${mini}')" src="./img/${mini}${estado}.png" class="${mini}"/>`
   }
-  return `<img src="interfaz/${mini}${estado}.png" id="boton${capi}" class="${mini}"/>`
+  return `<img src="./img/${mini}${estado}.png" id="boton${capi}" class="${mini}"/>`
 }
 
 function botonesNavegacion (x, y) {
@@ -320,101 +321,6 @@ function cambiaNivel (direccion) {
   botonesNavegacion(xLlegada, yLlegada)
 }
 
-function actualizarAcciones (tomar, mirar, usar) {
-  if (tomar === 1) {
-    document.querySelector('.tomar').src = 'interfaz/tomarp.png'
-  } else {
-    document.querySelector('.tomar').src = 'interfaz/tomar.png'
-  }
-
-  if (mirar === 1) {
-    document.querySelector('.mirar').src = 'interfaz/mirarp.png'
-  } else {
-    document.querySelector('.mirar').src = 'interfaz/mirar.png'
-  }
-
-  if (usar === 1) {
-    document.querySelector('.usar').src = 'interfaz/usarp.png'
-  } else {
-    document.querySelector('.usar').src = 'interfaz/usar.png'
-  }
-}
-
-// ///////// elbotondetomar{}  //////////////////
-
-const botontomar = document.createElement('input')
-botontomar.setAttribute('type', 'image')
-botontomar.setAttribute('onclick', 'tomartomar()')
-botontomar.src = 'interfaz/tomar.png'
-botontomar.className = 'tomar'
-
-divPrincipal.appendChild(botontomar)
-
-function tomartomar () {
-  if (detener == 0 && usaro1 == null) {
-    mirar = 0
-    usar = 0
-    if (tomar == 0) {
-      tomar = 1
-      ssel.play()
-    } else if (tomar == 1) {
-      tomar = 0
-      sunsel.play()
-    }
-    actualizarAcciones(tomar, mirar, usar)
-  }
-}
-
-// ////////// elbotondemirar(){} ////////////////////
-
-const botonmirar = document.createElement('input')
-botonmirar.setAttribute('type', 'image')
-botonmirar.setAttribute('onclick', 'mirarmirar()')
-botonmirar.src = 'interfaz/mirar.png'
-botonmirar.className = 'mirar'
-
-divPrincipal.appendChild(botonmirar)
-
-function mirarmirar () {
-  if (detener === 0 && usaro1 === null) {
-    tomar = 0
-    usar = 0
-    if (mirar == 0) {
-      mirar = 1
-      ssel.play()
-    } else if (mirar == 1) {
-      mirar = 0
-      sunsel.play()
-    }
-    actualizarAcciones(tomar, mirar, usar)
-  }
-}
-
-// ////////// elbotondeusar(){} ////////////////////
-
-const botonusar = document.createElement('input')
-botonusar.setAttribute('type', 'image')
-botonusar.setAttribute('onclick', 'usarusar()')
-botonusar.src = 'interfaz/usar.png'
-botonusar.className = 'usar'
-
-divPrincipal.appendChild(botonusar)
-
-function usarusar () {
-  if (detener == 0 && usaro1 == null) {
-    mirar = 0
-    tomar = 0
-    if (usar == 0) {
-      usar = 1
-      ssel.play()
-    } else if (usar == 1) {
-      usar = 0
-      sunsel.play()
-    }
-    actualizarAcciones(tomar, mirar, usar)
-  }
-}
-
 // /////// Declarando inventario//////////////
 
 let inventa = []
@@ -422,13 +328,13 @@ let inventa = []
 // Generadores de objetos
 
 function objeto (nombre, juntable, lugar) {
-  const boton = `<input type="image" id="${nombre}" src="interfaz/obj/${nombre}.png" class="objeto${nombre}" onclick="accion('${nombre}', '${juntable}')" />`
+  const boton = `<input type="image" id="${nombre}" src="./img/obj/${nombre}.png" class="objeto${nombre}" onclick="accion('${nombre}', '${juntable}')" />`
   let nivel = document.getElementById('nivel' + lugar)
   nivel.insertAdjacentHTML('afterbegin', boton)
 }
 
 function objetoFondo (nombre, lugar) {
-  const objeto = `<img src="interfaz/obj/${nombre}.png" class="objeto${nombre}" />`
+  const objeto = `<img src="./img/obj/${nombre}.png" class="objeto${nombre}" />`
   const nivel = document.getElementById('nivel' + lugar)
   nivel.insertAdjacentHTML('afterbegin', objeto)
 }
@@ -523,7 +429,7 @@ function sacarcuadro (nombre) {
 function objetoi (nombre) {
   objetoi.count++
   inventa[objetoi.count] = nombre
-  const boton = `<input type="image" id="${nombre}" onclick="accionficha('${nombre}')" src="interfaz/obj/${nombre}-o.png" class="objeto${objetoi.count}o" />`
+  const boton = `<input type="image" id="${nombre}" onclick="accionficha('${nombre}')" src="./img/obj/${nombre}-o.png" class="objeto${objetoi.count}o" />`
   divPrincipal.insertAdjacentHTML('afterbegin', boton)
 }
 
@@ -555,7 +461,7 @@ function selecFicha (nombre, indice) {
     console.log('es 0');
     console.log(inventa);
     seleccion = 1
-    const imgsele = `<input type="image" src="interfaz/fichasel.png" id="pepito" class="objeto${indice}o always-on-top" />`
+    const imgsele = `<input type="image" src="./img/fichasel.png" id="pepito" class="objeto${indice}o always-on-top" />`
     console.log(imgsele);
     divPrincipal.insertAdjacentHTML('afterbegin', imgsele)
 

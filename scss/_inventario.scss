@@ -1,0 +1,28 @@
+@mixin posicion_obj_inventario($numero) {
+  $left-margin: 46px;
+  $separation: 115px;
+  $first-line: 132px;
+  $second-line: 24px;
+
+  @if $numero < 4 {
+    bottom: $first-line;
+  } @else {
+    bottom: $second-line;
+  }
+  left: $left-margin + (($numero % 4) * $separation);
+}
+
+.inventario {
+  @include posicion(11);
+
+  @for $i from 1 through 8 {
+    @at-root #{&}__objeto_#{$i} {
+      @include posicion_obj_inventario($i - 1);
+    }
+  }
+
+}
+
+.always-on-top {
+  z-index: 999;
+}

@@ -1,0 +1,43 @@
+.este {
+    bottom: 102px;
+    left: 772px;
+    @include posicion(11);
+}
+
+.oeste {
+    bottom: 102px;
+    left: 920px;
+    @include posicion(11);
+}
+
+.norte {
+    bottom: 173px;
+    left: 845px;
+    @include posicion(11);
+}
+
+.sur {
+    bottom: 32px;
+    left: 845px;
+    @include posicion(11);
+}
+
+.tomar {
+    bottom: 161px;
+    left: 545px;
+    @include posicion(11);
+}
+
+.mirar {
+    bottom: 93px;
+    left: 545px;
+    @include posicion(11);
+}
+
+.usar {
+    bottom: 24px;
+    left: 545px;
+    @include posicion(11);
+}
+
+

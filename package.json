@@ -1,0 +1,18 @@
+{
+  "name": "av2",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "git@github.com:Malows/av2.git",
+  "author": "Juan Manuel Cruz <cruz.jm.stafe@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html",
+    "dev": "parcel index.html",
+    "dev:watch": "parcel watch index.html",
+    "prod": "rimraf dist/ && parcel build index.html"
+  },
+  "devDependencies": {
+    "node-sass": "^4.9.0",
+    "rimraf": "^2.6.2"
+  }
+}
