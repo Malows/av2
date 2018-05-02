@@ -1,0 +1,43 @@
+.letra {
+    @include posicion(10);
+}
+
+.letra--a {
+    bottom: 500px;
+    left: 150px;
+}
+
+.letra--b {
+    bottom: 500px;
+    left: 220px;
+}
+
+.letra--c {
+    bottom: 500px;
+    left: 300px;
+}
+
+.letra--d {
+    bottom: 500px;
+    left: 400px;
+}
+
+.letra--e {
+    bottom: 300px;
+    left: 400px;
+}
+
+.letra--f {
+    bottom: 300px;
+    left: 150px;
+}
+
+.letra--g {
+    bottom: 300px;
+    left: 220px;
+}
+
+.letra--h {
+    bottom: 300px;
+    left: 300px;
+}

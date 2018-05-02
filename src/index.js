@@ -1,4 +1,4 @@
-// import '../scss/style.scss'
+import '../scss/style.scss'
 // Definiendo el div principal
 
 const divPrincipal = document.getElementById('principal')

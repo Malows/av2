@@ -1,0 +1,29 @@
+.objeto {
+    @include posicion(10);
+}
+
+.objeto__llave {
+    bottom: 155px;
+    left: 420px;
+}
+
+.objeto__cofre {
+    bottom: 80px;
+    left: 350px;
+}
+
+.objeto__cofre--abierto {
+    bottom: 80px;
+    left: 350px;
+}
+
+.objeto__puerta {
+    bottom: 39px;
+    left: 440px;
+}
+
+.objeto__puerta--abierta {
+    bottom: 15px;
+    left: 440px;
+}
+
