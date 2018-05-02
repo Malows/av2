@@ -1,4 +1,5 @@
 import '../scss/style.scss'
+
 // Definiendo el div principal
 
 const divPrincipal = document.getElementById('principal')
@@ -22,13 +23,13 @@ let detener = 0
 
 // Declarando musica
 
-const audio = new Audio('turu.mp3')
-const sabrir = new Audio('abrir cuadro.mp3')
-const scerrar = new Audio('cerrar cuadro.mp3')
-const ssel = new Audio('sel.mp3')
-const sunsel = new Audio('unsel.mp3')
-const cnvl = new Audio('nivel.mp3')
-const asf = new Audio('seleficha.mp3')
+const audio = document.getElementById('sonidoTuru')
+const sabrir = document.getElementById('sonidoAbrirCuadro')
+const scerrar = document.getElementById('sonidoCerrarCuadro')
+const ssel = document.getElementById('sonidoSel')
+const sunsel = document.getElementById('sonidoUnsel')
+const cnvl = document.getElementById('sonidoNivel')
+const asf = document.getElementById('sonidoSeleFicha')
 
 // ///// creando niveles /////////////////////////
 
@@ -40,7 +41,7 @@ function nivelNuevo (nombre, x, y, entrable) {
   nivelArray.push({ nombre, x, y, entrable })
 
   const nuevoNivel = `
-    <div class="nivel" id="nivel${nombre}" style="display: hidden">
+    <div class="nivel" id="nivel${nombre}" style="display: none">
         <img src="./img/fondos/${nombre}.png" />
     </div>`
 
@@ -94,194 +95,6 @@ let estadoBotonSur = 0
 let estadoBotonEste = false
 let estadoBotonOeste = false
 
-function crearBotonNavegacion (orientacion, prendido) {
-  const mini = orientacion.toLowerCase()
-  const capi = orientacion[0].toUpperCase() + mini.substring(1)
-  const estado = prendido ? 'p' : 'a'
-  if (prendido) {
-    return `<input id="boton${capi}" type="image" onclick="cambiaNivel('${mini}')" src="./img/${mini}${estado}.png" class="${mini}"/>`
-  }
-  return `<img src="./img/${mini}${estado}.png" id="boton${capi}" class="${mini}"/>`
-}
-
-function botonesNavegacion (x, y) {
-  testeadorMovilidad(x, y)
-
-  if (movilidad.oeste == true && estadoBotonOeste == false) {
-    const botonOeste = crearBotonNavegacion('oeste', true)
-    divPrincipal.insertAdjacentHTML('afterbegin', botonOeste)
-    estadoBotonOeste = true
-  }
-
-  if (movilidad.oeste == false && estadoBotonOeste == true) {
-    let boton = document.getElementById('botonOeste')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    estadoBotonOeste = false
-  }
-
-  if (movilidad.este == true && estadoBotonEste == false) {
-    const botonEste = crearBotonNavegacion('este', true)
-    divPrincipal.insertAdjacentHTML('afterbegin', botonEste)
-    estadoBotonEste = true
-  }
-
-  if (movilidad.este == false && estadoBotonEste == true) {
-    let boton = document.getElementById('botonEste')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    estadoBotonEste = false
-  }
-
-  if (movilidad.sur == 1 && estadoBotonSur == 0) {
-    const botonSur = crearBotonNavegacion('sur', true)
-    divPrincipal.insertAdjacentHTML('afterbegin', botonSur)
-
-    estadoBotonSur = 1
-  }
-
-  if (movilidad.sur == 1 && estadoBotonSur == 2) {
-    let boton = document.getElementById('botonSur')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    const botonSur = crearBotonNavegacion('sur', true)
-    divPrincipal.insertAdjacentHTML('afterbegin', botonSur)
-
-    estadoBotonSur = 1
-  }
-
-  if (movilidad.sur == 2 && estadoBotonSur == 0) {
-    const botonSur = crearBotonNavegacion('sur', false)
-    divPrincipal.insertAdjacentHTML('afterbegin', botonSur)
-
-    estadoBotonSur = 2
-  }
-
-  if (movilidad.sur == 2 && estadoBotonSur == 1) {
-    let boton = document.getElementById('botonSur')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    const botonSur = crearBotonNavegacion('sur', false)
-    divPrincipal.insertAdjacentHTML('afterbegin', botonSur)
-
-    estadoBotonSur = 2
-  }
-
-  if (movilidad.sur == 0 && estadoBotonSur != 0) {
-    let boton = document.getElementById('botonSur')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    estadoBotonSur = 0
-  }
-
-    // /////////////////////////////////////////////////
-
-  if (movilidad.norte == 1 && estadoBotonNorte == 0) {
-    const botonNorte = document.createElement('input')
-    botonNorte.setAttribute('id', 'botonNorte')
-    botonNorte.setAttribute('type', 'image')
-    botonNorte.setAttribute('onclick', "cambiaNivel('norte')")
-    botonNorte.src = 'interfaz/nortep.png'
-    botonNorte.className = 'norte'
-    divPrincipal.appendChild(botonNorte)
-
-    estadoBotonNorte = 1
-  }
-
-  if (movilidad.norte == 1 && estadoBotonNorte == 2) {
-    let boton = document.getElementById('botonNorte')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    const botonNorte = document.createElement('input')
-    botonNorte.setAttribute('id', 'botonNorte')
-    botonNorte.setAttribute('type', 'image')
-    botonNorte.setAttribute('onclick', "cambiaNivel('norte')")
-    botonNorte.src = 'interfaz/nortep.png'
-    botonNorte.className = 'norte'
-    divPrincipal.appendChild(botonNorte)
-
-    estadoBotonNorte = 1
-  }
-
-  if (movilidad.norte == 2 && estadoBotonNorte == 0) {
-    const botonNorte = document.createElement('img')
-    botonNorte.setAttribute('id', 'botonNorte')
-    botonNorte.src = 'interfaz/nortea.png'
-    botonNorte.className = 'norte'
-    divPrincipal.appendChild(botonNorte)
-
-    estadoBotonNorte = 2
-  }
-
-  if (movilidad.norte == 2 && estadoBotonNorte == 1) {
-    let boton = document.getElementById('botonNorte')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    const botonNorte = document.createElement('img')
-    botonNorte.setAttribute('id', 'botonNorte')
-    botonNorte.src = 'interfaz/nortea.png'
-    botonNorte.className = 'norte'
-    divPrincipal.appendChild(botonNorte)
-
-    estadoBotonNorte = 2
-  }
-
-  if (movilidad.norte == 0 && estadoBotonNorte != 0) {
-    let boton = document.getElementById('botonNorte')
-    let padre = boton.parentNode
-    padre.removeChild(boton)
-
-    estadoBotonNorte = 0
-  }
-}
-
-function testeadorMovilidad (x, y) {
-  movilidad.oeste = false
-  movilidad.norte = 0
-  movilidad.sur = 0
-  movilidad.este = false
-
-    // manejas movilidad OESTE
-  const indexOeste = nivelArray.findIndex(nivel => nivel.x === x - 1 && nivel.y === y)
-  movilidad.oeste = indexOeste !== -1
-
-    // manejas movilidad ESTE
-  const indexEste = nivelArray.findIndex(nivel => nivel.x === x - 1 && nivel.y === y)
-  movilidad.este = indexEste !== -1
-
-    // manejas movilidad NORTE
-  const indexNorte = nivelArray.findIndex(nivel => nivel.x === x && nivel.y === y + 1)
-  if (indexNorte === -1) {
-      // no encontrado
-    movilidad.norte = 0
-  } else if (nivelArray[indexNorte].entrable === 'entrable') {
-      // encontrado y entrable
-    movilidad.norte = 1
-      // encontrado y no entrable
-  } else {
-    movilidad.norte = 2
-  }
-
-    // manejas movilidad SUR
-  const indexSur = nivelArray.findIndex(nivel => nivel.x === x && nivel.y === y - 1)
-  if (indexSur === -1) {
-      // no encontrado
-    movilidad.sur = 0
-  } else if (nivelArray[indexSur].entrable === 'entrable') {
-      // encontrado y entrable
-    movilidad.sur = 1
-      // encontrado y no entrable
-  } else {
-    movilidad.sur = 2
-  }
-}
 
 function cambiaNivel (direccion) {
   let partida = document.getElementById('nivel' + nivelActual)
