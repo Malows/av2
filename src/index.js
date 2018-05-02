@@ -1,5 +1,13 @@
 import '../scss/style.scss'
 
+import sonidoTuru from '../sounds/turu.mp3'
+import sonidoAbrirCuadro from '../sounds/abrir_cuadro.mp3'
+import sonidoCerrarCuadro from '../sounds/cerrar_cuadro.mp3'
+import sonidoSel from '../sounds/sel.mp3'
+import sonidoUnsel from '../sounds/unsel.mp3'
+import sonidoNivel from '../sounds/nivel.mp3'
+import sonidoSeleFicha from '../sounds/seleficha.mp3'
+
 // Definiendo el div principal
 
 const divPrincipal = document.getElementById('principal')
@@ -23,13 +31,13 @@ let detener = 0
 
 // Declarando musica
 
-const audio = document.getElementById('sonidoTuru')
-const sabrir = document.getElementById('sonidoAbrirCuadro')
-const scerrar = document.getElementById('sonidoCerrarCuadro')
-const ssel = document.getElementById('sonidoSel')
-const sunsel = document.getElementById('sonidoUnsel')
-const cnvl = document.getElementById('sonidoNivel')
-const asf = document.getElementById('sonidoSeleFicha')
+const audio = new Audio(sonidoTuru)
+const sabrir = new Audio(sonidoAbrirCuadro)
+const scerrar = new Audio(sonidoCerrarCuadro)
+const ssel = new Audio(sonidoSel)
+const sunsel = new Audio(sonidoUnsel)
+const cnvl = new Audio(sonidoNivel)
+const asf = new Audio(sonidoSeleFicha)
 
 // ///// creando niveles /////////////////////////
 
