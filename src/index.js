@@ -14,9 +14,6 @@ const divPrincipal = document.getElementById('principal')
 
 // Declarando botones
 
-let tomar = 0
-let mirar = 0
-let usar = 0
 let seleccion = 0
 objetoi.count = 0
 
@@ -103,7 +100,6 @@ let estadoBotonSur = 0
 let estadoBotonEste = false
 let estadoBotonOeste = false
 
-
 function cambiaNivel (direccion) {
   let partida = document.getElementById('nivel' + nivelActual)
   partida.style.visibility = 'hidden'
@@ -113,22 +109,22 @@ function cambiaNivel (direccion) {
   let xLlegada
   let yLlegada
 
-  if (direccion == 'norte') {
+  if (direccion === 'norte') {
     xLlegada = coordenadasPartida.x
     yLlegada = coordenadasPartida.y + 1
   }
 
-  if (direccion == 'sur') {
+  if (direccion === 'sur') {
     xLlegada = coordenadasPartida.x
     yLlegada = coordenadasPartida.y - 1
   }
 
-  if (direccion == 'este') {
+  if (direccion === 'este') {
     xLlegada = coordenadasPartida.x + 1
     yLlegada = coordenadasPartida.y
   }
 
-  if (direccion == 'oeste') {
+  if (direccion === 'oeste') {
     xLlegada = coordenadasPartida.x - 1
     yLlegada = coordenadasPartida.y
   }
@@ -141,7 +137,7 @@ function cambiaNivel (direccion) {
   nivelActual = nombreLlegada
   botonesNavegacion(xLlegada, yLlegada)
 }
-
+estado.
 // /////// Declarando inventario//////////////
 
 let inventa = []
@@ -163,25 +159,23 @@ function objetoFondo (nombre, lugar) {
 function accion (nombre, juntable) {
   if (detener) return undefined
 
-  if (tomar) {
-    if (juntable == 'tomable') {
-      let boton = document.getElementById(nombre)
-      let lugar = boton.parentNode
-      lugar.removeChild(boton)
+  if (estado.acciones.tomar) {
+    if (juntable === 'tomable') {
+      eliminarNodo(nombre)
       audio.play()
       let tomado = new objetoi(nombre)
     } else {
       cuadromirar('notomar')
     }
-    tomar = 0
+    estado.acciones.tomar = 0
   }
 
-  if (mirar) {
-    mirar = 0
+  if (estado.acciones.mirar) {
+    estado.acciones.mirar = 0
     cuadromirar(nombre)
   }
 
-  if (usar) {
+  if (estado.acciones.usar) {
     usaro2 = nombre
     accionUsar()
   }
@@ -192,9 +186,7 @@ function accion (nombre, juntable) {
 function accionUsar () {
   let parte1 = usaro1 || ''
 
-  if (usaro1 != null) {
-    selecFicha()
-  }
+  if (usaro1 !== null) selecFicha()
 
   let parte2 = usaro2
 
@@ -208,128 +200,32 @@ function accionUsar () {
   usar = 0
 }
 
+const crearCuadro (nombre, innerText = null) => `
+  <div class="textines" id="m${nombre}" onclick="sacarcuadro('m${nombre}')">
+    <p class="letras">${innerText || 'no se que queres que haga'}</p>
+  </div>`
+
 function cuadromirar (nombre) {
   detener = 1
   sabrir.play()
-
-  const cuadrin = `
-  <div class="textines" id="m${nombre}" onclick="sacarcuadro('m${nombre}')">
-    <p class="letras">${nombre}</p>
-  </div>`
-
+  const cuadrin = crearCuadro(nombre, nombre)
   divPrincipal.insertAdjacentHTML('afterbegin', cuadrin)
 }
 
 function cuadrousar (nombre) {
   detener = 1
-
-  const cuadrin = document.createElement('div')
-  cuadrin.className = 'textines'
-  cuadrin.setAttribute('id', 'u' + nombre)
-
-  const texto1 = document.createElement('p')
-  texto1.textContent = 'no se que queres que haga'
-  texto1.className = 'letras'
-
-  divPrincipal.appendChild(cuadrin)
-  cuadrin.appendChild(texto1)
-
-  const sacardir = "sacarcuadro('u" + nombre + "')"
-  cuadrin.setAttribute('onclick', sacardir)
+  const cuadrin = crearCuadro(nombre)
+  divPrincipal.insertAdjacentHTML('afterbegin', cuadrin)
 }
 
 function sacarcuadro (nombre) {
-  const cuadro = document.getElementById(nombre)
-  divPrincipal.removeChild(cuadro)
+  eliminarNodo(nombre)
   scerrar.play()
   detener = 0
 }
 
-// Generadores de fichas de invetario
-
-function objetoi (nombre) {
-  objetoi.count++
-  inventa[objetoi.count] = nombre
-  const boton = `<input type="image" id="${nombre}" onclick="accionficha('${nombre}')" src="./img/obj/${nombre}-o.png" class="objeto${objetoi.count}o" />`
-  divPrincipal.insertAdjacentHTML('afterbegin', boton)
+function eliminarNodo (id) {
+  const elem = document.getElementById(id)
+  elem.parentNode.removeChild(elem)
 }
 
-function accionficha (nombre) {
-  if (detener) return undefined
-
-  if (usar) {
-    if (usaro1 == null) {
-      const index = inventa.findIndex(objInventario => objInventario === nombre)
-      if (index !== -1) {
-        selecFicha(nombre, index)
-      }
-    } else {
-      usaro2 = nombre
-      accionUsar()
-    }
-  }
-
-  if (mirar) {
-    mirar = 0
-    cuadromirar(nombre)
-  }
-  actualizarAcciones(tomar, mirar, usar)
-}
-
-function selecFicha (nombre, indice) {
-  console.log('entro en seleccion');
-  if (!seleccion) {
-    console.log('es 0');
-    console.log(inventa);
-    seleccion = 1
-    const imgsele = `<input type="image" src="./img/fichasel.png" id="pepito" class="objeto${indice}o always-on-top" />`
-    console.log(imgsele);
-    divPrincipal.insertAdjacentHTML('afterbegin', imgsele)
-
-    usaro1 = nombre
-    asf.play()
-  } else {
-    console.log('es 1');
-    seleccion = 0
-    const botone = document.getElementById('pepito')
-    divPrincipal.removeChild(botone)
-  }
-}
-
-function eliminar (nombre) {
-  const botone = document.getElementById(nombre)
-  divPrincipal.removeChild(botone)
-
-  const index = inventa.findIndex(obj => obj === nombre)
-  if (index === -1) return undefined
-
-  inventa[index] = null
-  objetoi.count--
-  inventario()
-}
-
-function eliminarDelNivel (nombre) {
-  let hijo = document.getElementById(nombre)
-  let padre = hijo.parentNode
-  padre.removeChild(hijo)
-}
-
-// ordenador de inventario
-
-function inventario () {
-  let a = 1
-  let test
-  let test2
-  let elqsigue
-
-  for (var indice = 0; indice < inventa.length; indice++) {
-    if (inventa[indice]) continue
-    let siguienteIndice = indice + 1
-    let siguienteElemento = inventa[indice + 1]
-    if (siguienteElemento) {
-      document.getElementById(siguienteElemento).className = `objeto${indice}o`
-      inventa[siguienteIndice] = null
-      inventa[indice] = siguienteElemento
-    }
-  }
-}
