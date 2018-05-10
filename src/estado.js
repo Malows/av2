@@ -12,7 +12,7 @@ const estado = {
   dialogo: null,
   niveles: {
     niveles: [],
-    nivelActual: null,
+    nivelActual: null
   },
   movilidad: {
     norte: 0,
@@ -46,4 +46,16 @@ export const setNiveles = niveles => {
 export const setNivelActual = nivelActual => {
   estado.niveles.nivelActual = nivelActual
   return estado.niveles
+}
+
+export const guardarEstado = () => {
+  window.localStorage.setItem('estado', JSON.stringify(estado))
+}
+export const cargarEstado = () => {
+  const guardado = JSON.parse(window.localStorage.getItem('estado'))
+  setAcciones(guardado.acciones)
+  setMovilidad(guardado.movilidad)
+  setInventario(guardado.inventario)
+  setNiveles(guardado.niveles.niveles)
+  setNivelActual(guardado.niveles.nivelActual)
 }

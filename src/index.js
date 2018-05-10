@@ -1,13 +1,5 @@
 import '../scss/style.scss'
 
-import sonidoTuru from '../sounds/turu.mp3'
-import sonidoAbrirCuadro from '../sounds/abrir_cuadro.mp3'
-import sonidoCerrarCuadro from '../sounds/cerrar_cuadro.mp3'
-import sonidoSel from '../sounds/sel.mp3'
-import sonidoUnsel from '../sounds/unsel.mp3'
-import sonidoNivel from '../sounds/nivel.mp3'
-import sonidoSeleFicha from '../sounds/seleficha.mp3'
-
 // Definiendo el div principal
 
 const divPrincipal = document.getElementById('principal')
@@ -27,14 +19,6 @@ let usaro2 = null
 let detener = 0
 
 // Declarando musica
-
-const audio = new Audio(sonidoTuru)
-const sabrir = new Audio(sonidoAbrirCuadro)
-const scerrar = new Audio(sonidoCerrarCuadro)
-const ssel = new Audio(sonidoSel)
-const sunsel = new Audio(sonidoUnsel)
-const cnvl = new Audio(sonidoNivel)
-const asf = new Audio(sonidoSeleFicha)
 
 // ///// creando niveles /////////////////////////
 
@@ -137,7 +121,6 @@ function cambiaNivel (direccion) {
   nivelActual = nombreLlegada
   botonesNavegacion(xLlegada, yLlegada)
 }
-estado.
 // /////// Declarando inventario//////////////
 
 let inventa = []
@@ -200,7 +183,7 @@ function accionUsar () {
   usar = 0
 }
 
-const crearCuadro (nombre, innerText = null) => `
+const crearCuadro = (nombre, innerText = null) => `
   <div class="textines" id="m${nombre}" onclick="sacarcuadro('m${nombre}')">
     <p class="letras">${innerText || 'no se que queres que haga'}</p>
   </div>`
@@ -228,4 +211,3 @@ function eliminarNodo (id) {
   const elem = document.getElementById(id)
   elem.parentNode.removeChild(elem)
 }
-
