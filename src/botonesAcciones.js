@@ -24,7 +24,7 @@ export const renderBoton = (accion, seleccionado) =>
 
 export const renderAcciones = () =>
   Object.entries(getAcciones())
-    .map(([accion, seleccionado]) => renderBoton(accion, seleccionado))
+    .map(x => renderBoton(...x))
     .join('\n')
 
 export function refreshAcciones () {

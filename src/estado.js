@@ -22,7 +22,7 @@ const estado = {
   }
 }
 
-const genericGet = collection => () => estado[collection]
+const genericGet = collection => () => Object.assign({}, estado[collection])
 const genericSet = collection => (insertionSet) => {
   estado[collection] = { ...estado[collection], ...insertionSet }
   return estado[collection]
@@ -58,4 +58,17 @@ export const cargarEstado = () => {
   setInventario(guardado.inventario)
   setNiveles(guardado.niveles.niveles)
   setNivelActual(guardado.niveles.nivelActual)
+}
+
+export const getDialogo = () => estado.dialogo
+export const setDialogo = dialogo => {
+  estado.dialogo = dialogo
+  estado.detener = true
+  return estado.detener
+}
+
+export const detenido = () => estado.detener
+export const setDetener = val => {
+  estado.detener = val
+  return estado.detener
 }

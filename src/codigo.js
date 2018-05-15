@@ -1,7 +1,8 @@
+import { getNiveles, setNiveles, setInventario, getInventario, setDialogo } from './estado'
+import Nivel from './models/Nivel'
+// import Objeto from './models/Objeto'
 
-// ------ Descripciones ------------
-
-function descrip (nombre) {
+export function descripcion (nombre) {
   if (nombre === 'a') { return 'Esto es una letra A de color verde' }
   if (nombre === 'b') { return 'Esto es una letra B de color amarillo' }
   if (nombre === 'c') { return 'Esto es una letra C de color azul' }
@@ -24,51 +25,56 @@ function descrip (nombre) {
 
 // ------ Funciones de Usar ------------
 
-function funcionesUsar (codigo) {
-  if (codigo === 'ab') {
-    cuadromirar('ab')
-  } else if (codigo === 'puerta') {
-    cuadromirar('puerta')
-  } else if (codigo === 'cofre') {
-    eliminarDelNivel(codigo)
+export function funcionesUsar (codigo) {
+  switch (codigo) {
+    case 'ab':
+      return setDialogo('ab')
 
-    objetoFondo('cofrea', 'pieza')
+    case 'puerta':
+      return setDialogo('puerta')
 
-    let objetollave = new objeto('llave', 'tomable', 'pieza')
+    case 'cofre':
+      // eliminarDelNivel(codigo)
+      // objetoFondo('cofrea', 'pieza')
+      return setDialogo('cofre')
 
-    cuadromirar('cofreu')
-  } else if (codigo === 'llavepuerta') {
-    eliminarDelNivel('puerta')
+    case 'llavepuerta':
+      // eliminarDelNivel('puerta')
+      // objetoFondo('puertaa', 'entrada')
+      setInventario({
+        objetos: getInventario().objetos.filter(x => x.name !== 'llave'),
+        objetoSeleccionado: undefined
+      })
+      const niveles = getNiveles().niveles
+      const index = niveles.findIndex(x => x.name === 'entrada')
+      // esto puede ser una referencia al nivel en el objeto
+      niveles[index].makeEntrable()
+      setNiveles({ niveles })
+      return setDialogo('puerta abierta')
 
-    objetoFondo('puertaa', 'entrada')
-
-    eliminar('llave')
-
-    hacerEntrable('fin')
-
-    cuadromirar('puertaa')
-  } else { cuadromirar('nadausar') }
+    default:
+      return setDialogo('nada usar')
+  }
 }
 
-// ------ Generando objetos ------------
+const ENTRABLE = true
+const NO_ENTRABLE = false
 
-// let objetoa = new objeto("a");
-// let objetob = new objeto("b");
-// let objetoc = new objeto("c");
-// let objetod = new objeto("d");
-// let objetoe = new objeto("e");
-// let objetof = new objeto("f");
-// let objetog = new objeto("g");
-// let objetoh = new objeto("h");
+let niveles = [
+  [ 'pieza', 2, 2, ENTRABLE ],
+  [ 'entrada', 2, 1, ENTRABLE ],
+  [ 'relleno1', 1, 2, ENTRABLE ],
+  [ 'relleno2', 3, 2, ENTRABLE ],
+  [ 'relleno3', 2, 3, ENTRABLE ],
+  [ 'fin', 2, 0, NO_ENTRABLE ]
+]
+niveles = niveles.map(x => new Nivel(...x))
+const nivelActivo = niveles.find(x => x.name === 'pieza')
 
-let nivelPieza = nivelNuevo('pieza', 2, 2, 'entrable')
-let nivelEntrada = nivelNuevo('entrada', 2, 1, 'entrable')
-let nivelrelleno1 = nivelNuevo('relleno1', 1, 2, 'entrable')
-let nivelrelleno2 = nivelNuevo('relleno2', 3, 2, 'entrable')
-let nivelrelleno3 = nivelNuevo('relleno3', 2, 3, 'entrable')
-let nivelfin = nivelNuevo('fin', 2, 0, 'noEntrable')
+setNiveles({ niveles, nivelActivo })
 
-nivelIncial('pieza')
-
-let objetocofre = new objeto('cofre', 'noTomable', 'pieza')
-let objetopuerta = new objeto('puerta', 'noTomable', 'entrada')
+/*
+let objetollave = new Objeto('llave', 'tomable', 'pieza')
+let objetocofre = new Objeto('cofre', 'noTomable', 'pieza')
+let objetopuerta = new Objeto('puerta', 'noTomable', 'entrada')
+*/
